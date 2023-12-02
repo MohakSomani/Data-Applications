@@ -24,12 +24,14 @@ def PrintTableContents(table):
     global conn
 
     try:
+        headers = []
         # first print the headers
         c.execute("SHOW COLUMNS FROM " + table + ";")
         print("----------" + table + "----------")
         i = 0
         for row in c.fetchall():
             print(row['Field'], end="\t")
+            headers.append(row['Field'])
             i += 1
         
         print("\n")
@@ -38,7 +40,7 @@ def PrintTableContents(table):
         c.execute("SELECT * FROM " + table + ";")
         for row in c.fetchall():
             for i in range(len(row)):
-                print(row[i], end="\t")
+                print(row[headers[i]], end="\t")
             print("\n")
     
     except pymysql.Error as e:

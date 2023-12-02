@@ -14,10 +14,39 @@ import pymysql
 import pymysql.cursors
 import subprocess as sp
 import os
+from PIL import Image
 
 c = None # cursor
 conn = None # connection
 tmp = None # shell pprocess variable
+
+def is_image_valid(file_path):
+    try:
+        # Attempt to open the image file
+        with Image.open(file_path) as img:
+            # Check if the image loaded successfully
+            return True
+    except (OSError, PIL.UnidentifiedImageError, PIL.DecompressionBombError) as e:
+        # Handle the exception (e.g., print an error message)
+        print(f"Error loading image: {e}")
+        return False
+
+def display_image(image_data):
+    # Open the image using Pillow
+    image = Image.open(BytesIO(image_data))
+
+    # Resize the image to fit the terminal width
+    terminal_width = 80  # You can adjust this based on your terminal width
+    aspect_ratio = image.width / image.height
+    terminal_height = int(terminal_width / aspect_ratio)
+    image = image.resize((terminal_width, terminal_height))
+
+    # Convert the image to ANSI escape codes for terminal graphics
+    image_code = "\033]1337;File=width={},height={};inline=1:{}\007".format(
+        image.width, image.height, BytesIO(image_data).read()
+    )
+
+    print(image_code)
 
 def PrintTableContents(table):
     global c
@@ -802,6 +831,7 @@ def HandleSearch():
     print("4. Search for ResearchNotes written by SpiderPerson (by ID)")
     print("5. Search for Members of Organization (by ID)")
 
+
     print("\nEnter your choice: ")
     choice = input()
     while True:
@@ -949,7 +979,8 @@ def HandleAnalytical():
             query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, COUNT(*) AS MissionsAssigned, AVG(Mission.ResourcesUsed) AS AverageResourcesUsed
                         FROM SpiderPerson LEFT JOIN Participant ON SpiderPerson.SpiderIdentifier = Participant.SpiderPersonSpiderIdentifier
                         LEFT JOIN Mission ON Participant.MissionTitle = Mission.Title
-                        GROUP BY SpiderPerson.SpiderIdentifier;'''
+                        GROUP BY SpiderPerson.SpiderIdentifier
+                        WHERE Mission.outcome="success" OR Mission.outcome="successful" OR Mission.outcome="done";'''
             
             try:
                 c.execute(query)
@@ -1008,8 +1039,47 @@ def HandleSelect():
     global conn
     global tmp
     
-    table = input("Enter the table name to select data from: ")
-    PrintTableContents(table)           
+    tmp = sp.call('clear', shell=True)
+    
+    print("Available tables: ")
+    print("----Entity Tables----")
+    print("1. SpiderPerson")
+    print("2. Villain")
+    print("3. Mission")
+    print("4. Organization")
+    print("5. SideCharacter")
+    print("6. ResearchNotes")
+    print("7. Equipment")
+    print("8. AbilitiesSpiderPerson")
+    print("9. AbilitiesVillain")
+    print("10. AbilitiesSideChar")
+
+    print("----Relationship Tables----")
+    print("1. Mentors")
+    print("2. FacesOffAgainst")
+    print("3. Owns")
+    print("4. HeadsMission")
+    print("5. MemberOf")
+    print("6. AssociatesWith")
+    print("7. Hypothesis")
+    print("8. Participant")
+    
+    print("----External Tables----")
+    print("1. Images")
+    
+    table = input("\nEnter the table name to select data from: ")
+    if table == "Images":
+        c.execute("SELECT * FROM Images")
+        images = c.fetchall()
+        
+        for image in images:
+            id = image['id']
+            data = image['image']
+            print(f"Image {id}:")
+            display_image(data)
+        
+    else:
+        PrintTableContents(table)           
         
 def HandleChoice(choice):
     global c
@@ -1096,10 +1166,19 @@ def main():
 
     #Load Images from the Images folder into Images table in the database
     i = 0
+    try:
+        c.execute("DROP TABLE Images IF EXISTS")
+        c.execute("CREATE TABLE Images (id INT, image LONGBLOB)")
+    except pymysql.Error as e:
+        print("An error occurred:", e.args[0])
+        return -1
+        
     for filename in os.listdir("Images"):
         if filename.endswith(".jpg") or filename.endswith(".png"):
+            is_image_valid("Images/" + filename)
             with open("Images/" + filename, 'rb') as file:
                 Ablob = file.read()
+                if Ablob
                 c.execute("INSERT INTO Images VALUES (?, ?)", (i, Ablob))
                 i += 1 
 

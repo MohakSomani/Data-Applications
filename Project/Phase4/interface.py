@@ -1040,7 +1040,7 @@ def main():
         else:
             print("Failed to connect")
 
-        tmp = input("Enter any key to CONTINUE>")
+        tmp = input("PRESS ENTER TO CONTINUE>")
     
     except Exception as e:
         print("Exception occured:{}".format(e))

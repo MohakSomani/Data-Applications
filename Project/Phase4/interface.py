@@ -413,7 +413,7 @@ def HandleInsert():
             print("Enter the Equipment Name: ")
             EquipmentName = input()
             if "NULL" not in EquipmentName:
-                query += "EquipmentName = \'" + EquipmentName + "\'"
+                query += "Equipment = \'" + EquipmentName + "\'"
             
         case "HeadsMission":
             print("Enter the Mission Title: ")

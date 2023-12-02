@@ -484,6 +484,318 @@ def HandleInsert():
         print("An error occurred:", e.args[0])
         return -1
 
+def HandleUpdate():
+    global c
+    print("Available tables: ")
+    print("----Entity Tables----")
+    print("1. SpiderPerson")
+    print("2. Villain")
+    print("3. Mission")
+    print("4. Organization")
+    print("5. SideCharacter")
+    print("6. ResearchNotes")
+    print("7. Equipment")
+    print("8. AbilitiesSpiderPerson")
+    print("9. AbilitiesVillain")
+    print("10. AbilitiesSideChar")
+
+    print("\nNOTE: Enter NULL for any field that is not applicable (for autoincrement fields)\n")
+
+    print("Enter the table name: ")
+    table = input()
+    if table == "exit":
+        return 0
+
+    query = "UPDATE " + table
+    query += " SET "
+
+    match table:
+        # Entity Tables
+        case "SpiderPerson":
+            print("Enter the SpiderPersonID to be Updated: ")
+            while 1:
+                SpiderPersonID = input()
+                try:
+                    SpiderPersonID = int(SpiderPersonID)
+                    break
+                except:
+                    print("Please enter a valid integer.")
+            
+            print("\nEnter Modified Values:\n")
+            
+            print("Enter the SpiderPerson RealName: ")
+            SpiderPersonName = input()
+            if "NULL" not in SpiderPersonName:
+                query += "RealName = \'" + SpiderPersonName + "\', "
+
+            print("Enter the SpiderPerson Dimension-ID: ")
+            DimensionID = input()
+            if "NULL" not in DimensionID:
+                query += "DimensionID = " + DimensionID + ", "
+
+            print("Enter the SpiderPerson HeroName: ")
+            HeroName = input()
+            if "NULL" not in HeroName:
+                query += "HeroName = \'" + HeroName + "\', "
+
+            print("Enter the SpiderPerson MissionLogs: ")
+            MissionLogs = input()
+            if "NULL" not in MissionLogs:
+                query += "MissionLogs = \'" + MissionLogs + "\', "
+
+            print("Enter the SpiderPerson Gender: ")
+            Gender = input()
+            if "NULL" not in Gender:
+                query += "Gender = \'" + Gender + "\' "
+                 
+            query += "WHERE SpiderIdentifier = " + SpiderPersonID
+            
+        case "Villain":
+            print("Enter the VillainID to be Updated: ")
+            while 1:
+                VillainID = input()
+                try:
+                    VillainID = int(VillainID)
+                    break
+                except:
+                    print("Please enter a valid integer.")
+                    
+            print("\nEnter Modified Values:\n")
+            
+            print("Enter the Villain RealName: ")
+            VillainName = input()
+            if "NULL" not in VillainName:
+                query += "RealName = \'" + VillainName + "\', "
+            
+            print("Enter the Villain Dimension-ID: ")
+            DimensionID = input()
+            if "NULL" not in DimensionID:
+                query += "DimensionID = " + DimensionID + ", "
+            
+            print("Enter the Villain Alias: ")
+            Alias = input()
+            if "NULL" not in Alias:
+                query += "VillainName = \'" + Alias + "\', "
+            
+            print("Enter the Threat Level for the Villain: ")
+            ThreatLevel = input()
+            if "NULL" not in ThreatLevel:
+                query += "ThreatLevel = " + ThreatLevel + ", "
+            
+            print("Enter the Villain Gender: ")
+            Gender = input()
+            if "NULL" not in Gender:
+                query += "Gender = \'" + Gender + "\' "
+                
+            query += "WHERE VillainIdentifier = " + VillainID
+            
+        case "Mission":
+            print("Enter the Mission Title to be Updated: ")
+            MissionTitle = input()
+            while 1:
+                try:
+                    MissionTitle = int(MissionTitle)
+                    break
+                except:
+                    print("Please enter a valid integer.")
+            
+            print("\nEnter Modified Values:\n")                
+            
+            print("Enter the Mission Objective: ")
+            MissionObjective = input()
+            if "NULL" not in MissionObjective:
+                query += "Objectives = \'" + MissionObjective + "\', "
+            
+            print("Enter the Mission Resources Expended: ")
+            MissionResourcesCost = input()
+            if "NULL" not in MissionResourcesCost:
+                query += "ResourcesUsed = \'" + MissionResourcesCost + "\', "
+            
+            print("Enter the Mission Outcome: ")
+            MissionOutcome = input()
+            if "NULL" not in MissionOutcome:
+                query += "Outcome = \'" + MissionOutcome + "\', "
+            
+            print("Enter the Mission Location Dimension-ID: ")
+            DimensionID = input()
+            if "NULL" not in DimensionID:
+                query += "DimensionID = " + DimensionID 
+            
+            query += "WHERE Title = \'" + MissionTitle + "\'"
+       
+        case "Organization":
+            print("Enter the Organization ID to be Updated: ")
+            while 1:
+                OrganizationID = input()
+                try:
+                    OrganizationID = int(OrganizationID)
+                    break
+                except:
+                    print("Please enter a valid integer.")
+                
+            print("\nEnter Modified Values:\n")
+            
+            print("Enter the Organization Name: ")
+            OrganizationName = input()
+            if "NULL" not in OrganizationName:
+                query += "Name = \'" + OrganizationName + "\', "
+            
+            print("Enter the Organization Dimension-ID: ")
+            DimensionID = input()
+            if "NULL" not in DimensionID:
+                query += "DimensionID = " + DimensionID + ", "
+            
+            print("Enter the Organization Time of Establishment (YYYY-MM-DD): ")
+            TimeOfEstablishment = input()
+            if "NULL" not in TimeOfEstablishment:
+                query += "TimeOfEstablishment = \'" + TimeOfEstablishment + "\', "
+            
+            print("Enter the Organization Objectives: ")
+            Objectives = input()
+            if "NULL" not in Objectives:
+                query += "Objectives = \'" + Objectives + "\', "
+            
+            print("Enter the Organization HQ-Location: ")
+            Location = input()
+            if "NULL" not in Location:
+                query += "HeadquartersLocation = \'" + Location + "\', "
+            
+            print("Enter the Organization Logo (ID): ")
+            Logo = input()
+            if "NULL" not in Logo:
+                query += "Logo = " + Logo 
+            
+            query += "WHERE OrganizationIdentifier = " + OrganizationID
+        
+        case "SideCharacter":
+            print("Enter the SideCharacter ID to be Updated: ")
+            while 1:
+                SideCharacterID = input()
+                try:
+                    SideCharacterID = int(SideCharacterID)
+                    break
+                except:
+                    print("Please enter a valid integer.")
+            
+            print("Enter the SideCharacter Name: ")
+            SideCharacterName = input()
+            if "NULL" not in SideCharacterName:
+                query += "Name = \'" + SideCharacterName + "\', "
+            
+            print("Enter the SideCharacter Dimension-ID: ")
+            DimensionID = input()
+            if "NULL" not in DimensionID:
+                query += "DimensionID = " + DimensionID + ", "
+            
+            print("Enter the SideCharacter Alias: ")
+            Alias = input()
+            if "NULL" not in Alias:
+                query += "MaskName = \'" + Alias + "\', "
+            
+            print("Enter the SideCharacter Gender: ")
+            Gender = input()
+            if "NULL" not in Gender:
+                query += "Gender = \'" + Gender + "\'"     
+            
+            query += "WHERE CharacterIdentifier = " + SideCharacterID       
+
+        case "ResearchNotes":
+            print("Enter the ResearchNotes Title to be Updated: ")
+            ResearchNotesTitle = input()                
+            
+            print("Enter the ResearchNotes Date (DD|MM|YYYY): ")
+            Date = input()
+            if "NULL" not in Date:
+                query += "Date = " + Date + ", "
+            
+            print("Enter the ResearchNotes Content: ")
+            Content = input()
+            if "NULL" not in Content:
+                query += "Content = \'" + Content + "\'"
+            
+            query += "WHERE Topic = \'" + ResearchNotesTitle + "\'"
+                        
+        case "Equipment":
+            print("Enter the Equipment Name: ")
+            EquipmentName = input()
+            
+            print("Enter the Equipment Type: ")
+            EquipmentType = input()
+            if "NULL" not in EquipmentType:
+                query += "Type = \'" + EquipmentType + "\', "
+            
+            print("Enter the Equipment Description: ")
+            EquipmentDescription = input()
+            if "NULL" not in EquipmentDescription:
+                query += "Description = \'" + EquipmentDescription + "\'"
+                
+            query += "WHERE Name = \'" + EquipmentName + "\'"
+            
+        case "AbilitiesSpiderPerson":
+            print("Enter the Corresponding SpiderPerson ID: ")
+            SpiderPersonID = input()
+            while 1:
+                try:
+                    SpiderPersonID = int(SpiderPersonID)
+                    break
+                except:
+                    print("Please enter a valid integer.")
+            
+            print("Enter the Ability Name: ")
+            AbilityName = input()
+            if "NULL" not in AbilityName:
+                query += "Ability = \'" + AbilityName + "\'" 
+            
+            query += "WHERE SpiderPersonSpiderIdentifier = " + SpiderPersonID
+        
+        case "AbilitiesVillain":    
+            print("Enter the Corresponding Villain ID: ")
+            VillainID = input()
+            while 1:
+                try:
+                    VillainID = int(VillainID)
+                    break
+                except:
+                    print("Please enter a valid integer.")
+            
+            print("Enter the Ability Name: ")
+            AbilityName = input()
+            if "NULL" not in AbilityName:
+                query += "Ability = \'" + AbilityName + "\'"
+            
+            query += "WHERE VillainIdentifier = " + VillainID
+        
+        case "AbilitiesSideChar":
+            print("Enter the Corresponding SideCharacter ID: ")
+            SideCharacterID = input()
+            while 1:
+                try:
+                    SideCharacterID = int(SideCharacterID)
+                    break
+                except:
+                    print("Please enter a valid integer.")
+        
+            print("Enter the Ability Name: ")
+            AbilityName = input()
+            if "NULL" not in AbilityName:
+                query += "Ability = \'" + AbilityName + "\'"
+            
+            query += "WHERE CharacterIdentifier = " + SideCharacterID
+        
+        case _:
+            print("Invalid table name")
+            return -1
+    
+    query += ";"
+    print(query) # debug statement
+    # execute the query
+    try:
+        c.execute(query)
+        return 0
+    except pymysql.Error as e:
+        print("An error occurred:", e.args[0])
+        return -1
+
 def HandleDelete():
     global c
     print("Available tables: ")
@@ -1110,15 +1422,18 @@ def HandleChoice(choice):
             HandleDelete()
             # conn.commit()
         case 5:
+            print("----------Update Operation----------")
+            HandleUpdate()
+        case 6:
             print("----------Projection Operation----------")
             HandleProjection()
-        case 6:
+        case 7:
             print("----------Aggregate Operation----------")
             HandleAggregate()
-        case 7:
+        case 8:
             print("----------Search Operation----------")
             HandleSearch()
-        case 8:
+        case 9:
             print("----------Analytical Operation----------")
             HandleAnalytical()
         case _:
@@ -1195,10 +1510,11 @@ def main():
         print(" 2. Fetching Content of a table")
         print(" 3. Insertion Operation")
         print(" 4. Delete Operation")
-        print(" 5. Projection Operation")
-        print(" 6. Aggregate Operation")
-        print(" 7. Search Operation")
-        print(" 8. Analytical Operation")
+        print(" 5. Update Operation")
+        print(" 6. Projection Operation")
+        print(" 7. Aggregate Operation")
+        print(" 8. Search Operation")
+        print(" 9. Analytical Operation")
         print("-------------------------------------------")
 
         while True:

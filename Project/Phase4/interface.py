@@ -9,6 +9,7 @@
 # Example: Equipment Usage report
 # Example: Mission Completion report
 
+
 import sqlite3
 import os
 import sys
@@ -534,7 +535,134 @@ def HandleDelete():
 
 def HandleProjection():
     global c
-    pass
+    print("Choose Among following Projection Options: ")
+    print("1. SpiderPerson and Associated Villians and SideCharacters ")
+    print("2. SpiderPerson and Abilities ")
+    print("3. Villian and Abilities ")
+    print("4. SideCharacter and Abilities ")
+    print("5. SpiderPerson and Associated Equipment ")
+    print("6. SpiderPerson and Associated Missions ")
+
+    print("\nEnter your choice: ")
+    choice = input()
+    while True:
+        try:
+            choice = int(choice)
+            break
+        except:
+            print("Please enter a valid integer.")
+    
+    match choice:
+        case 1:
+            print("----------SpiderPerson and Associated Villians and SideCharacters----------")
+            query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, Villian.VillianIdentifier, Villian.RealName, SideCharacter.CharacterIdentifier, SideCharacter.Name 
+                       FROM SpiderPerson LEFT JOIN FacesOffAgainst ON SpiderPerson.SpiderIdentifier = FacesOffAgainst.SpiderPersonIdentifier 
+                       LEFT JOIN Villian ON FacesOffAgainst.VillianIdentifier = Villian.VillianIdentifier 
+                       LEFT JOIN AssociatesWith ON SpiderPerson.SpiderIdentifier = AssociatesWith.SpiderPersonIdentifier 
+                       LEFT JOIN SideCharacter ON AssociatesWith.SideCharacterIdentifier = SideCharacter.CharacterIdentifier;'''
+            
+            try:
+                c.execute(query)
+            except sqlite3.Error as e:
+                print("An error occurred:", e.args[0])
+                return -1
+
+            # print the result
+            for row in c.fetchall():
+                print(row)
+            
+            return 0
+
+        case 2:
+            print("----------SpiderPerson and Abilities----------")
+            query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, AbilitiesSpiderPerson.Ability
+                        FROM SpiderPerson LEFT JOIN AbilitiesSpiderPerson ON SpiderPerson.SpiderIdentifier = AbilitiesSpiderPerson.SpiderPersonIdentifier;''' 
+
+            try:
+                c.execute(query)
+            except sqlite3.Error as e:
+                print("An error occurred:", e.args[0])
+                return -1
+            
+            # print the result
+            for row in c.fetchall():
+                print(row)
+            
+            return 0
+        
+        case 3:
+            print("----------Villian and Abilities----------")
+            query = '''SELECT Villian.VillianIdentifier, Villian.RealName, Villian.VillianName, AbilitiesVillian.Ability
+                        FROM Villian LEFT JOIN AbilitiesVillian ON Villian.VillianIdentifier = AbilitiesVillian.VillianIdentifier;'''
+            
+            try:
+                c.execute(query)
+            except sqlite3.Error as e:
+                print("An error occurred:", e.args[0])
+                return -1
+            
+            # print the result
+            for row in c.fetchall():
+                print(row)
+
+            return 0
+        
+        case 4:
+            print("----------SideCharacter and Abilities----------")
+            query = '''SELECT SideCharacter.CharacterIdentifier, SideCharacter.Name, SideCharacter.MaskName, AbilitiesSideChar.Ability
+                        FROM SideCharacter LEFT JOIN AbilitiesSideChar ON SideCharacter.CharacterIdentifier = AbilitiesSideChar.SideCharacterIdentifier;'''
+            
+            try:
+                c.execute(query)
+            except sqlite3.Error as e:
+                print("An error occurred:", e.args[0])
+                return -1
+            
+            # print the result
+            for row in c.fetchall():
+                print(row)
+
+            return 0
+        
+        case 5:
+            print("----------SpiderPerson and Associated Equipment----------")
+            query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, Equipment.Name
+                        FROM SpiderPerson LEFT JOIN Owns ON SpiderPerson.SpiderIdentifier = Owns.SpiderPersonSpiderIdentifier
+                        LEFT JOIN Equipment ON Owns.EquipmentName = Equipment.Name;'''
+            
+            try:
+                c.execute(query)
+            except sqlite3.Error as e:
+                print("An error occurred:", e.args[0])
+                return -1
+            
+            # print the result
+            for row in c.fetchall():
+                print(row)
+            
+            return 0
+        
+        case 6:
+            print("----------SpiderPerson and Associated Missions----------")
+            query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, Mission.Title
+                        FROM SpiderPerson LEFT JOIN Participant ON SpiderPerson.SpiderIdentifier = Participant.SpiderPersonSpiderIdentifier
+                        LEFT JOIN Mission ON Participant.MissionTitle = Mission.Title;'''
+            
+            try:
+                c.execute(query)
+            except sqlite3.Error as e:
+                print("An error occurred:", e.args[0])
+                return -1
+            
+            # print the result
+            for row in c.fetchall():
+                print(row)
+
+            return 0
+    
+        case _:
+            print("Invalid choice")
+            return -1
 
 def HandleAggregate():
     global c

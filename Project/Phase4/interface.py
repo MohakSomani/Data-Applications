@@ -16,6 +16,33 @@ import sys
 c = None # cursor
 conn = None # connection
 
+def PrintTables():
+    try:
+        c.execute("SELECT name FROM sqlite_master WHERE type='table'")
+    except sqlite3.Error as e:
+        print("An error occurred:", e.args[0])
+        return -1
+
+    print("Tables in the database: ")
+    for row in c.fetchall():
+        print(row[0])
+
+    return 0
+
+def PrintColumns(table):
+    query = "PRAGMA table_info(" + table + ")"
+    try:
+        c.execute(query)
+    except sqlite3.Error as e:
+        print("An error occurred:", e.args[0])
+        return -1
+
+    print("Columns in " + table + ": ")
+    for row in c.fetchall():
+        print(row[1])
+
+    return 0
+
 def HandleSimpleSQL(query):
     # execute the query
     try:
@@ -31,6 +58,7 @@ def HandleSimpleSQL(query):
     return 0
 
 def HandleInsert():
+    '''
     print("Available tables: ")
     print("----Entity Tables----")
     print("1. SpiderPerson")
@@ -54,6 +82,7 @@ def HandleInsert():
     print("7. Hypothesis")
     print("8. Participant")
     print("\nNOTE: Enter NULL for any field that is not applicable (for autoincrement fields)\n")
+    '''
 
     print("Enter the table name: ")
     table = input()
@@ -382,10 +411,112 @@ def HandleInsert():
         return -1
 
 def HandleDelete():
-    pass
+    print("Available tables: ")
+    print("----Entity Tables----")
+    print("1. SpiderPerson")
+    print("2. Villian")
+    print("3. Mission")
+    print("4. Organization")
+    print("5. SideCharacter")
+    print("6. ResearchNotes")
+    print("7. Equipment")
+    print("8. AbilitiesSpiderPerson")
+    print("9. AbilitiesVillian")
+    print("10. AbilitiesSideChar")
 
-def HandleSelect():
-    pass
+    print("\nEnter the Corresponding Primary Key for the table for deletion in each table\n")
+    '''
+    print("----Relationship Tables----")
+    print("1. Mentors")
+    print("2. FacesOffAgainst")
+    print("3. Owns")
+    print("4. HeadsMission")
+    print("5. MemberOf")
+    print("6. AssociatesWith")
+    print("7. Hypothesis")
+    print("8. Participant")
+    print("\nNOTE: Enter NULL for any field that is not applicable (for autoincrement fields)\n")
+    '''
+
+    print("Enter the table name: ")
+    table = input()
+    if table == "exit":
+        return 0
+
+    query = "DELETE FROM " + table
+    query += " WHERE "
+
+    match table:
+        # Entity Tables
+        case "SpiderPerson":
+            print("Enter the SpiderPersonID: ")
+            SpiderPersonID = input()
+
+            query += "SpiderIdentifier = " + SpiderPersonID
+        
+        case "Villian":
+            print("Enter the VillianID: ")
+            VillianID = input()
+
+            query += "VillianIdentifier = " + VillianID
+        
+        case "Mission":
+            print("Enter the Mission Title: ")
+            MissionTitle = input()
+
+            query += "Title = " + MissionTitle
+
+        case "Organization":
+            print("Enter the Organization ID: ")
+            OrganizationID = input()
+
+            query += "OrganizationIdentifier = " + OrganizationID
+        
+        case "SideCharacter":
+            print("Enter the SideCharacter ID: ")
+            SideCharacterID = input()
+
+            query += "CharacterIdentifier = " + SideCharacterID
+        
+        case "ResearchNotes":
+            print("Enter the ResearchNotes Topic: ")
+            ResearchNotesTopic = input()
+
+            query += "Topic = " + ResearchNotesTopic
+        
+        case "Equipment":
+            print("Enter the Equipment Name: ")
+            EquipmentName = input()
+
+            query += "Name = " + EquipmentName
+        
+        case "AbilitiesSpiderPerson":
+            print("Enter the Corresponding SpiderPerson ID: ")
+            SpiderPersonID = input()
+
+            query += "SpiderPersonIdentifier = " + SpiderPersonID
+        
+        case "AbilitiesVillian":
+            print("Enter the Corresponding Villian ID: ")
+            VillianID = input()
+
+            query += "VillianIdentifier = " + VillianID
+        
+        case "AbilitiesSideChar":
+            print("Enter the Corresponding SideCharacter ID: ")
+            SideCharacterID = input()
+
+            query += "SideCharacterIdentifier = " + SideCharacterID
+
+        # Relationship Tables DELETE CASACADE
+
+    # execute the query
+    try:
+        c.execute(query)
+        return 0
+    except sqlite3.Error as e:
+        print("An error occurred:", e.args[0])
+        return -1
 
 def HandleProjection():
     pass
@@ -451,11 +582,16 @@ def main():
     #     with open("Images/" + filename, 'rb') as file:
     #         Ablob = file.read()
     #         c.execute("INSERT INTO Images VALUES (?, ?)", (i, Ablob))
-    #         i += 1    
+    #         i += 1 
+
+    #Print the tables in the database
+    print("----------Welcome to the Spiderverse Database----------")
+    print("----------Tables in the database----------")    
+    PrintTables() 
 
     while True:
         #take input from user
-        print("----------Welcome to the Spiderverse Database----------")
+        print("-------------------------------------------")
         print(" 1. Standard SQL query (Select, Insert, Update, Delete)")
         print(" 2. Insertion Operation")
         print(" 3. Delete Operation")

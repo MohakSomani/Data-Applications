@@ -23,7 +23,7 @@ def PrintTables():
     global c
     try:
         c.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    except sqlite3.Error as e:
+    except pymysql.Error as e:
         print("An error occurred:", e.args[0])
         return -1
 
@@ -42,7 +42,7 @@ def PrintColumns(table):
     query = "PRAGMA table_info(" + table + ")"
     try:
         c.execute(query)
-    except sqlite3.Error as e:
+    except pymysql.Error as e:
         print("An error occurred:", e.args[0])
         return -1
 
@@ -60,7 +60,7 @@ def HandleSimpleSQL(query):
     # execute the query
     try:
         c.execute(query)
-    except sqlite3.Error as e:
+    except pymysql.Error as e:
         print("An error occurred:", e.args[0])
         return -1
 
@@ -422,7 +422,7 @@ def HandleInsert():
     try:
         c.execute(query)
         return 0
-    except sqlite3.Error as e:
+    except pymysql.Error as e:
         print("An error occurred:", e.args[0])
         return -1
 
@@ -531,7 +531,7 @@ def HandleDelete():
     try:
         c.execute(query)
         return 0
-    except sqlite3.Error as e:
+    except pymysql.Error as e:
         print("An error occurred:", e.args[0])
         return -1
 
@@ -565,7 +565,7 @@ def HandleProjection():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
 
@@ -582,7 +582,7 @@ def HandleProjection():
 
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -599,7 +599,7 @@ def HandleProjection():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -616,7 +616,7 @@ def HandleProjection():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -634,7 +634,7 @@ def HandleProjection():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -652,7 +652,7 @@ def HandleProjection():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -691,7 +691,7 @@ def HandleAggregate():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -707,7 +707,7 @@ def HandleAggregate():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -723,7 +723,7 @@ def HandleAggregate():
 
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -736,7 +736,7 @@ def HandleAggregate():
 
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -753,7 +753,7 @@ def HandleAggregate():
 
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -794,7 +794,7 @@ def HandleSearch():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -816,7 +816,7 @@ def HandleSearch():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -838,7 +838,7 @@ def HandleSearch():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -860,7 +860,7 @@ def HandleSearch():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -882,7 +882,7 @@ def HandleSearch():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -924,7 +924,7 @@ def HandleAnalytical():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
         
@@ -942,7 +942,7 @@ def HandleAnalytical():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             
@@ -960,7 +960,7 @@ def HandleAnalytical():
             
             try:
                 c.execute(query)
-            except sqlite3.Error as e:
+            except pymysql.Error as e:
                 print("An error occurred:", e.args[0])
                 return -1
             

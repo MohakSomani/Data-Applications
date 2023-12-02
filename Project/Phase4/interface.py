@@ -25,8 +25,13 @@ def PrintTables():
         return -1
 
     print("Tables in the database: ")
+    i = 1
     for row in c.fetchall():
-        print(row[0])
+        print(i,end=". ")
+        print(row[0], end=": \n")
+        i+=1
+        PrintColumns(row[0])
+        print()
 
     return 0
 
@@ -38,9 +43,13 @@ def PrintColumns(table):
         print("An error occurred:", e.args[0])
         return -1
 
-    print("Columns in " + table + ": ")
+    print("[Attributes of " + table + ":]")
+    i = 1
     for row in c.fetchall():
+        print("  ",end="")
+        print(i,end=". ")
         print(row[1])
+        i+=1
 
     return 0
 
@@ -127,7 +136,7 @@ def HandleInsert():
             if "NULL" not in Gender:
                 query += "Gender = " + Gender 
 
-        case "Villian":
+        case "Villain":
             print("Enter the VillianID: ")
             VillianID = input()
             if "NULL" not in VillianID:
@@ -404,6 +413,8 @@ def HandleInsert():
             print("Invalid table name")
             return -1
     
+    query += ";"
+    print(query) # debug statement
     # execute the query
     try:
         c.execute(query)
@@ -538,6 +549,8 @@ def HandleAnalytical():
     pass
 
 def HandleChoice(choice):
+    global c
+    global conn
     match choice:
         case 1:
             print("----------Simple SQL query----------")
@@ -555,10 +568,11 @@ def HandleChoice(choice):
         case 2:
             print("----------Insert Operation----------")
             HandleInsert()
-            conn.commit()
+            # conn.commit()
         case 3:
             print("----------Delete Operation----------")
             HandleDelete()
+            # conn.commit()
         case 4:
             print("----------Projection Operation----------")
             HandleProjection()
@@ -601,6 +615,7 @@ def main():
     print("----------Welcome to the Spiderverse Database----------")
     print("----------Tables in the database----------")    
     PrintTables() 
+
 
     while True:
         #take input from user

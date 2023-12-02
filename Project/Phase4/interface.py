@@ -15,10 +15,13 @@ import pymysql.cursors
 import subprocess as sp
 import os
 from PIL import Image
+from io import BytesIO
+import tempfile
 
 c = None # cursor
 conn = None # connection
 tmp = None # shell pprocess variable
+DB = 'spiderverse'
 
 def is_image_valid(file_path):
     try:
@@ -36,17 +39,28 @@ def display_image(image_data):
     image = Image.open(BytesIO(image_data))
 
     # Resize the image to fit the terminal width
-    terminal_width = 80  # You can adjust this based on your terminal width
+    terminal_width = 70  # You can adjust this based on your terminal width
     aspect_ratio = image.width / image.height
     terminal_height = int(terminal_width / aspect_ratio)
     image = image.resize((terminal_width, terminal_height))
 
+    '''    
     # Convert the image to ANSI escape codes for terminal graphics
     image_code = "\033]1337;File=width={},height={};inline=1:{}\007".format(
         image.width, image.height, BytesIO(image_data).read()
     )
 
     print(image_code)
+    '''
+    temp_file = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
+    image.save(temp_file, format="png")
+    temp_file.close()
+
+    # Use img2txt tool from iterm2-tools to display the image in the terminal
+    sp.run(["img2txt", "-W", str(terminal_width), temp_file.name])
+
+    # Clean up the temporary file after displaying the image
+    os.unlink(temp_file.name)
 
 def PrintTableContents(table):
     global c
@@ -91,9 +105,9 @@ def PrintTables():
     i = 1
     for row in c.fetchall():
         print(i,end=". ")
-        print(row['Tables_in_spiderverse'], end=": \n")
+        print(row['Tables_in_'+DB], end=": \n")
         i+=1
-        PrintColumns(row['Tables_in_spiderverse'])
+        PrintColumns(row['Tables_in_'+DB])
         print()
 
     return 0
@@ -1453,6 +1467,11 @@ def main():
     
     tmp = sp.call('clear', shell=True)
     
+    print("Enter the username: ")
+    username = input()
+    print("Enter the password: ")
+    password = input()
+    
     print("Trying to connect to the database...", end="")
 
     try:
@@ -1461,9 +1480,9 @@ def main():
         conn = pymysql.connect(
                             #   host='localhost',
                             #   port=30306,
-                              user="chiragdhamija",
-                              password="jaiguruji",
-                              db='spiderverse',
+                              user=username,
+                              password=password,
+                              db=DB,
                               autocommit=True,
                               cursorclass=pymysql.cursors.DictCursor
                               )
@@ -1477,7 +1496,8 @@ def main():
             print("Exiting...")
             exit(1)
 
-        tmp = input("PRESS ENTER TO CONTINUE>")
+        input("PRESS ENTER TO CONTINUE>")
+        tmp = sp.call('clear', shell=True)
     
     except Exception as e:
         print("Exception occured:{}".format(e))

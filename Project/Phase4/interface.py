@@ -1293,11 +1293,11 @@ def HandleAnalytical():
     match choice:
         case 1:
             print("----------SpiderPerson Efficiency report----------")
-            query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, COUNT(*) AS MissionsAssigned, AVG(Mission.ResourcesUsed) AS AverageResourcesUsed
+            query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, COUNT(*) AS MissionsAssigned
                         FROM SpiderPerson LEFT JOIN Participant ON SpiderPerson.SpiderIdentifier = Participant.SpiderPersonSpiderIdentifier
                         LEFT JOIN Mission ON Participant.MissionTitle = Mission.Title
-                        GROUP BY SpiderPerson.SpiderIdentifier
-                        WHERE Mission.outcome="success" OR Mission.outcome="successful" OR Mission.outcome="done";'''
+                        WHERE Mission.Outcome NOT IN ('unsuccessful', 'incomplete', 'Ongoing')
+                        GROUP BY SpiderPerson.SpiderIdentifier;'''
             
             try:
                 c.execute(query)
@@ -1313,9 +1313,10 @@ def HandleAnalytical():
         
         case 2:
             print("----------Villain Opposition Network report----------")
-            query = '''SELECT Villain.VillainIdentifier, Villain.RealName, Villain.VillainName, COUNT(*) AS SpiderPersonsFacedOff
+            query = '''SELECT Villain.VillainIdentifier, Villain.RealName, Villain.VillainName, COUNT(*) AS SpiderPersonsFacedOff, AbilitiesVillain.Ability AS Ability
                         FROM Villain LEFT JOIN FacesOffAgainst ON Villain.VillainIdentifier = FacesOffAgainst.VillainVillainIdentifier
-                        GROUP BY Villain.VillainIdentifier;'''
+                        LEFT JOIN AbilitiesVillain ON Villain.VillainIdentifier = AbilitiesVillain.VillainIdentifier
+                        GROUP BY Villain.VillainIdentifier, AbilitiesVillain.Ability;'''
             
             try:
                 c.execute(query)

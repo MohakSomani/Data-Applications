@@ -350,7 +350,9 @@ CREATE TABLE `Organization` (
   `Objectives` text,
   `HeadquartersLocation` varchar(255) DEFAULT NULL,
   `Logo` int DEFAULT NULL,
-  PRIMARY KEY (`OrganizationIdentifier`)
+  PRIMARY KEY (`OrganizationIdentifier`),
+  KEY `image_const` (`Logo`),
+  CONSTRAINT `image_const` FOREIGN KEY (`Logo`) REFERENCES `Images` (`IMGID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -360,7 +362,7 @@ CREATE TABLE `Organization` (
 
 LOCK TABLES `Organization` WRITE;
 /*!40000 ALTER TABLE `Organization` DISABLE KEYS */;
-INSERT INTO `Organization` VALUES (1,'S.H.I.E.L.D.',616,'1965-04-04','Protecting Earth from threats','New York',1),(2,'Spider Society',65,'2010-09-21','Maintaining Multiverse balance','Earth-65',2),(3,'Spider-Guild',1610,'1999-12-12','Training & safeguarding realities','Brooklyn',3),(4,'WebWatchers',2099,'2078-06-30','Time anomalies prevention','Nueva York',4),(5,'Arachnid Alliance',67,'1985-10-15','Uniting against threats','New York',5);
+INSERT INTO `Organization` VALUES (1,'S.H.I.E.L.D.',616,'1965-04-04','Protecting Earth from threats','New York',NULL),(2,'Spider Society',65,'2010-09-21','Maintaining Multiverse balance','Earth-65',NULL),(3,'Spider-Guild',1610,'1999-12-12','Training & safeguarding realities','Brooklyn',NULL),(4,'WebWatchers',2099,'2078-06-30','Time anomalies prevention','Nueva York',NULL),(5,'Arachnid Alliance',67,'1985-10-15','Uniting against threats','New York',NULL);
 /*!40000 ALTER TABLE `Organization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -535,4 +537,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-02 20:05:42
+-- Dump completed on 2023-12-03  5:21:23

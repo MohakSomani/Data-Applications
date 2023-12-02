@@ -352,7 +352,7 @@ def HandleInsert():
             print("Enter the Corresponding SpiderPerson ID: ")
             SpiderPersonID = input()
             if "NULL" not in SpiderPersonID:
-                query += "SpiderPersonIdentifier = " + SpiderPersonID + ", "
+                query += "SpiderPersonSpiderIdentifier = " + SpiderPersonID + ", "
             
             print("Enter the Ability Name: ")
             AbilityName = input()
@@ -374,7 +374,7 @@ def HandleInsert():
             print("Enter the Corresponding SideCharacter ID: ")
             SideCharacterID = input()
             if "NULL" not in SideCharacterID:
-                query += "SideCharacterIdentifier = " + SideCharacterID + ", "
+                query += "CharacterIdentifier = " + SideCharacterID + ", "
             
             print("Enter the Ability Name: ")
             AbilityName = input()
@@ -397,12 +397,12 @@ def HandleInsert():
             print("Enter the Villain ID: ")
             VillainID = input()
             if "NULL" not in VillainID:
-                query += "VillainIdentifier = " + VillainID + ", "
+                query += "VillainVillainIdentifier = " + VillainID + ", "
             
             print("Enter the SpiderPerson ID: ")
             SpiderPersonID = input()
             if "NULL" not in SpiderPersonID:
-                query += "SpiderPersonIdentifier = " + SpiderPersonID
+                query += "SpiderPersonSpiderIdentifier = " + SpiderPersonID
 
         case "Owns":
             print("Enter the SpiderPerson ID: ")
@@ -452,12 +452,12 @@ def HandleInsert():
             print("Enter the ResearchNotes Title: ")
             ResearchNotesTitle = input()
             if "NULL" not in ResearchNotesTitle:
-                query += "ResearchNotesTopic = \'" + ResearchNotesTitle + "\', "
+                query += "ResearchNote= \'" + ResearchNotesTitle + "\', "
             
             print("Enter the SpiderPerson ID: ")
             SpiderPersonID = input()
             if "NULL" not in SpiderPersonID:
-                query += "SpiderPersonSpiderIdentifier = " + SpiderPersonID
+                query += "SpiderIdentifier = " + SpiderPersonID
         
         case "Participant":
             print("Enter the Mission Title: ")
@@ -569,7 +569,7 @@ def HandleDelete():
             print("Enter the Corresponding SpiderPerson ID: ")
             SpiderPersonID = input()
 
-            query += "SpiderPersonIdentifier = " + SpiderPersonID
+            query += "SpiderPersonSpiderIdentifier = " + SpiderPersonID
         
         case "AbilitiesVillain":
             print("Enter the Corresponding Villain ID: ")
@@ -581,7 +581,7 @@ def HandleDelete():
             print("Enter the Corresponding SideCharacter ID: ")
             SideCharacterID = input()
 
-            query += "SideCharacterIdentifier = " + SideCharacterID
+            query += "CharacterIdentifier = " + SideCharacterID
 
         # Relationship Tables DELETE CASACADE
 
@@ -616,10 +616,10 @@ def HandleProjection():
         case 1:
             print("----------SpiderPerson and Associated Villains and SideCharacters----------")
             query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, Villain.VillainIdentifier, Villain.RealName, SideCharacter.CharacterIdentifier, SideCharacter.Name 
-                       FROM SpiderPerson LEFT JOIN FacesOffAgainst ON SpiderPerson.SpiderIdentifier = FacesOffAgainst.SpiderPersonIdentifier 
-                       LEFT JOIN Villain ON FacesOffAgainst.VillainIdentifier = Villain.VillainIdentifier 
-                       LEFT JOIN AssociatesWith ON SpiderPerson.SpiderIdentifier = AssociatesWith.SpiderPersonIdentifier 
-                       LEFT JOIN SideCharacter ON AssociatesWith.SideCharacterIdentifier = SideCharacter.CharacterIdentifier;'''
+                       FROM SpiderPerson LEFT JOIN FacesOffAgainst ON SpiderPerson.SpiderIdentifier = FacesOffAgainst.SpiderPersonSpiderIdentifier 
+                       LEFT JOIN Villain ON FacesOffAgainst.VillainVillainIdentifier = Villain.VillainIdentifier 
+                       LEFT JOIN AssociatesWith ON SpiderPerson.SpiderIdentifier = AssociatesWith.SpiderPersonSpiderIdentifier 
+                       LEFT JOIN SideCharacter ON AssociatesWith.SideCharacterCharacterIdentifier = SideCharacter.CharacterIdentifier;'''
             
             try:
                 c.execute(query)
@@ -636,7 +636,7 @@ def HandleProjection():
         case 2:
             print("----------SpiderPerson and Abilities----------")
             query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, AbilitiesSpiderPerson.Ability
-                        FROM SpiderPerson LEFT JOIN AbilitiesSpiderPerson ON SpiderPerson.SpiderIdentifier = AbilitiesSpiderPerson.SpiderPersonIdentifier;''' 
+                        FROM SpiderPerson LEFT JOIN AbilitiesSpiderPerson ON SpiderPerson.SpiderIdentifier = AbilitiesSpiderPerson.SpiderPersonSpiderIdentifier;''' 
 
             try:
                 c.execute(query)
@@ -670,7 +670,7 @@ def HandleProjection():
         case 4:
             print("----------SideCharacter and Abilities----------")
             query = '''SELECT SideCharacter.CharacterIdentifier, SideCharacter.Name, SideCharacter.MaskName, AbilitiesSideChar.Ability
-                        FROM SideCharacter LEFT JOIN AbilitiesSideChar ON SideCharacter.CharacterIdentifier = AbilitiesSideChar.SideCharacterIdentifier;'''
+                        FROM SideCharacter LEFT JOIN AbilitiesSideChar ON SideCharacter.CharacterIdentifier = AbilitiesSideChar.CharacterIdentifier;'''
             
             try:
                 c.execute(query)
@@ -688,7 +688,7 @@ def HandleProjection():
             print("----------SpiderPerson and Associated Equipment----------")
             query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, Equipment.Name
                         FROM SpiderPerson LEFT JOIN Owns ON SpiderPerson.SpiderIdentifier = Owns.SpiderPersonSpiderIdentifier
-                        LEFT JOIN Equipment ON Owns.EquipmentName = Equipment.Name;'''
+                        LEFT JOIN Equipment ON Owns.Equipment = Equipment.Name;'''
             
             try:
                 c.execute(query)
@@ -892,7 +892,7 @@ def HandleSearch():
             SpiderPersonID = input()
             query = '''SELECT Equipment.Name, Equipment.Type, Equipment.Description
                         FROM SpiderPerson LEFT JOIN Owns ON SpiderPerson.SpiderIdentifier = Owns.SpiderPersonSpiderIdentifier
-                        LEFT JOIN Equipment ON Owns.EquipmentName = Equipment.Name
+                        LEFT JOIN Equipment ON Owns.Equipment = Equipment.Name
                         WHERE SpiderPerson.SpiderIdentifier = ''' + SpiderPersonID + ";"
             
             try:
@@ -913,8 +913,8 @@ def HandleSearch():
             print("Enter the SpiderPerson ID: ")
             SpiderPersonID = input()
             query = '''SELECT ResearchNotes.Date, ResearchNotes.Topic, ResearchNotes.Content
-                        FROM SpiderPerson LEFT JOIN Hypothesis ON SpiderPerson.SpiderIdentifier = Hypothesis.SpiderPersonSpiderIdentifier
-                        LEFT JOIN ResearchNotes ON Hypothesis.ResearchNotesTopic = ResearchNotes.Topic
+                        FROM SpiderPerson LEFT JOIN Hypothesis ON SpiderPerson.SpiderIdentifier = Hypothesis.SpiderIdentifier
+                        LEFT JOIN ResearchNotes ON Hypothesis.ResearchNote = ResearchNotes.Topic
                         WHERE SpiderPerson.SpiderIdentifier = ''' + SpiderPersonID + ";"
             
             try:
@@ -997,7 +997,7 @@ def HandleAnalytical():
         case 2:
             print("----------Villain Opposition Network report----------")
             query = '''SELECT Villain.VillainIdentifier, Villain.RealName, Villain.VillainName, COUNT(*) AS SpiderPersonsFacedOff
-                        FROM Villain LEFT JOIN FacesOffAgainst ON Villain.VillainIdentifier = FacesOffAgainst.VillainIdentifier
+                        FROM Villain LEFT JOIN FacesOffAgainst ON Villain.VillainIdentifier = FacesOffAgainst.VillainVillainIdentifier
                         GROUP BY Villain.VillainIdentifier;'''
             
             try:
@@ -1015,7 +1015,7 @@ def HandleAnalytical():
         case 3:
             print("----------Equipment Usage report----------")
             query = '''SELECT Equipment.Name, Equipment.Type, COUNT(*) AS SpiderPersonsUsing
-                        FROM Equipment LEFT JOIN Owns ON Equipment.Name = Owns.EquipmentName
+                        FROM Equipment LEFT JOIN Owns ON Equipment.Name = Owns.Equipment
                         GROUP BY Equipment.Name;'''
             
             try:
@@ -1167,7 +1167,7 @@ def main():
     #Load Images from the Images folder into Images table in the database
     i = 0
     try:
-        c.execute("DROP TABLE Images IF EXISTS")
+        c.execute("DROP TABLE IF EXISTS Images")
         c.execute("CREATE TABLE Images (id INT, image LONGBLOB)")
     except pymysql.Error as e:
         print("An error occurred:", e.args[0])
@@ -1178,9 +1178,9 @@ def main():
             is_image_valid("Images/" + filename)
             with open("Images/" + filename, 'rb') as file:
                 Ablob = file.read()
-                if Ablob
-                c.execute("INSERT INTO Images VALUES (?, ?)", (i, Ablob))
-                i += 1 
+                if Ablob:
+                     c.execute("INSERT INTO Images VALUES (%s, %s)", (i, Ablob))
+                     i += 1 
 
     #Print the tables in the database
     print("----------Welcome to the Spiderverse Database----------")
@@ -1192,7 +1192,7 @@ def main():
         #take input from user
         print("\n----------Available Operations----------")
         print(" 1. Standard SQL query (Select, Insert, Update, Delete)")
-        print(" 2. Fetching Content oof a table")
+        print(" 2. Fetching Content of a table")
         print(" 3. Insertion Operation")
         print(" 4. Delete Operation")
         print(" 5. Projection Operation")

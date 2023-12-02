@@ -479,7 +479,7 @@ def HandleDelete():
             print("Enter the Mission Title: ")
             MissionTitle = input()
 
-            query += "Title = " + MissionTitle
+            query += "Title = \'" + MissionTitle + "\'"
 
         case "Organization":
             print("Enter the Organization ID: ")
@@ -497,13 +497,13 @@ def HandleDelete():
             print("Enter the ResearchNotes Topic: ")
             ResearchNotesTopic = input()
 
-            query += "Topic = " + ResearchNotesTopic
+            query += "Topic = \'" + ResearchNotesTopic + "\'"
         
         case "Equipment":
             print("Enter the Equipment Name: ")
             EquipmentName = input()
 
-            query += "Name = " + EquipmentName
+            query += "Name = \'" + EquipmentName + "\'"
         
         case "AbilitiesSpiderPerson":
             print("Enter the Corresponding SpiderPerson ID: ")

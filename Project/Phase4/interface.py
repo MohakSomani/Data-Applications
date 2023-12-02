@@ -17,8 +17,9 @@ c = None # cursor
 conn = None # connection
 
 def PrintTables():
+    global c
     try:
-        c.execute("SELECT name FROM sqlite_master WHERE type='table'")
+        c.execute("SELECT name FROM sqlite_master WHERE type='table';")
     except sqlite3.Error as e:
         print("An error occurred:", e.args[0])
         return -1
@@ -58,6 +59,7 @@ def HandleSimpleSQL(query):
     return 0
 
 def HandleInsert():
+    global c
     '''
     print("Available tables: ")
     print("----Entity Tables----")
@@ -103,7 +105,7 @@ def HandleInsert():
             print("Enter the SpiderPerson RealName: ")
             SpiderPersonName = input()
             if "NULL" not in SpiderPersonName:
-                query += "RealName = "SpiderPersonName + ", "
+                query += "RealName = " + SpiderPersonName + ", "
 
             print("Enter the SpiderPerson Dimension-ID: ")
             DimensionID = input()
@@ -411,6 +413,7 @@ def HandleInsert():
         return -1
 
 def HandleDelete():
+    global c
     print("Available tables: ")
     print("----Entity Tables----")
     print("1. SpiderPerson")
@@ -519,15 +522,19 @@ def HandleDelete():
         return -1
 
 def HandleProjection():
+    global c
     pass
 
 def HandleAggregate():
+    global c
     pass
 
 def HandleSearch():
+    global c
     pass
 
 def HandleAnalytical():
+    global c
     pass
 
 def HandleChoice(choice):
@@ -569,9 +576,18 @@ def HandleChoice(choice):
             return 0    
                 
 def main():
+    global c
     # connect to the database and Initialize the cursor
     conn = sqlite3.connect("spiderverse.db")
     c = conn.cursor()
+
+    # check for successful connection
+    if conn is None:
+        print("Error connecting to the database")
+        return -1
+    elif c is None:
+        print("Error initializing the cursor")
+        return -1
 
     #Load Images from the Images folder into Images table in the database
     # i = 0
@@ -588,7 +604,7 @@ def main():
 
     while True:
         #take input from user
-        print("-------------------------------------------")
+        print("\n----------Available Operations----------")
         print(" 1. Standard SQL query (Select, Insert, Update, Delete)")
         print(" 2. Insertion Operation")
         print(" 3. Delete Operation")
@@ -600,15 +616,19 @@ def main():
 
         while True:
             choice = input("\nEnter your choice: ")
-            if type(choice) is not int:
-                print("Please enter a valid integer")
-                continue
-            break
+            
+            try:
+                choice = int(choice)
+                break
+            except:
+                print("Please enter a valid integer.")
 
         HandleChoice(choice)
         Continue = input("Do you want to continue? (Y/N): ")
         if Continue == "Y" or Continue == "y":
             continue
+
+        break
 
     print("----------Thank you for using the Spiderverse Database----------")
     conn.commit()

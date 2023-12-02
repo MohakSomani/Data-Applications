@@ -22,7 +22,7 @@ tmp = None # shell pprocess variable
 def PrintTables():
     global c
     try:
-        c.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        c.execute("SHOW tables;")
     except pymysql.Error as e:
         print("An error occurred:", e.args[0])
         return -1

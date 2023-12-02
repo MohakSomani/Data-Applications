@@ -4,7 +4,7 @@
 # 2. Complex Projection Query 
 # 3. Aggreate Query
 # 4. Nested Query
-# Example: Villian Opposition Network report
+# Example: Villain Opposition Network report
 # Example: Spider Person Efficiency report
 # Example: Equipment Usage report
 # Example: Mission Completion report
@@ -72,18 +72,17 @@ def HandleSimpleSQL(query):
 
 def HandleInsert():
     global c
-    '''
     print("Available tables: ")
     print("----Entity Tables----")
     print("1. SpiderPerson")
-    print("2. Villian")
+    print("2. Villain")
     print("3. Mission")
     print("4. Organization")
     print("5. SideCharacter")
     print("6. ResearchNotes")
     print("7. Equipment")
     print("8. AbilitiesSpiderPerson")
-    print("9. AbilitiesVillian")
+    print("9. AbilitiesVillain")
     print("10. AbilitiesSideChar")
 
     print("----Relationship Tables----")
@@ -96,7 +95,6 @@ def HandleInsert():
     print("7. Hypothesis")
     print("8. Participant")
     print("\nNOTE: Enter NULL for any field that is not applicable (for autoincrement fields)\n")
-    '''
 
     print("Enter the table name: ")
     table = input()
@@ -117,7 +115,7 @@ def HandleInsert():
             print("Enter the SpiderPerson RealName: ")
             SpiderPersonName = input()
             if "NULL" not in SpiderPersonName:
-                query += "RealName = " + SpiderPersonName + ", "
+                query += "RealName = \'" + SpiderPersonName + "\', "
 
             print("Enter the SpiderPerson Dimension-ID: ")
             DimensionID = input()
@@ -127,69 +125,69 @@ def HandleInsert():
             print("Enter the SpiderPerson HeroName: ")
             HeroName = input()
             if "NULL" not in HeroName:
-                query += "HeroName = " + HeroName + ", "
+                query += "HeroName = \'" + HeroName + "\', "
 
             print("Enter the SpiderPerson MissionLogs: ")
             MissionLogs = input()
             if "NULL" not in MissionLogs:
-                query += "MissionLogs = " + MissionLogs + ", "
+                query += "MissionLogs = \'" + MissionLogs + "\', "
 
             print("Enter the SpiderPerson Gender: ")
             Gender = input()
             if "NULL" not in Gender:
-                query += "Gender = " + Gender 
+                query += "Gender = \'" + Gender + "\'"
 
         case "Villain":
-            print("Enter the VillianID: ")
-            VillianID = input()
-            if "NULL" not in VillianID:
-                query += "VillianIdentifier = " + VillianID + ", "
+            print("Enter the VillainID: ")
+            VillainID = input()
+            if "NULL" not in VillainID:
+                query += "VillainIdentifier = " + VillainID + ", "
             
-            print("Enter the Villian RealName: ")
-            VillianName = input()
-            if "NULL" not in VillianName:
-                query += "RealName = " + VillianName + ", "
+            print("Enter the Villain RealName: ")
+            VillainName = input()
+            if "NULL" not in VillainName:
+                query += "RealName = \'" + VillainName + "\', "
             
-            print("Enter the Villian Dimension-ID: ")
+            print("Enter the Villain Dimension-ID: ")
             DimensionID = input()
             if "NULL" not in DimensionID:
                 query += "DimensionID = " + DimensionID + ", "
             
-            print("Enter the Villian Alias: ")
+            print("Enter the Villain Alias: ")
             Alias = input()
             if "NULL" not in Alias:
-                query += "VillianName = " + Alias + ", "
+                query += "VillainName = \'" + Alias + "\', "
             
-            print("Enter the Threat Level for the Villian: ")
+            print("Enter the Threat Level for the Villain: ")
             ThreatLevel = input()
             if "NULL" not in ThreatLevel:
                 query += "ThreatLevel = " + ThreatLevel + ", "
             
-            print("Enter the Villian Gender: ")
+            print("Enter the Villain Gender: ")
             Gender = input()
             if "NULL" not in Gender:
-                query += "Gender = " + Gender 
+                query += "Gender = \'" + Gender + "\'"
             
         case "Mission":
             print("Enter the Mission Title: ")
             MissionTitle = input()
             if "NULL" not in MissionTitle:
-                query += "MissionTitle = " + MissionTitle + ", "
+                query += "Title = \'" + MissionTitle + "\', "
             
             print("Enter the Mission Objective: ")
             MissionObjective = input()
             if "NULL" not in MissionObjective:
-                query += "Objectives = " + MissionObjective + ", "
+                query += "Objectives = \'" + MissionObjective + "\', "
             
             print("Enter the Mission Resources Cost: ")
             MissionResourcesCost = input()
             if "NULL" not in MissionResourcesCost:
-                query += "ResourcesUsed = " + MissionResourcesCost + ", "
+                query += "ResourcesUsed = \'" + MissionResourcesCost + "\', "
             
             print("Enter the Mission Outcome: ")
             MissionOutcome = input()
             if "NULL" not in MissionOutcome:
-                query += "Outcome = " + MissionOutcome + ", "
+                query += "Outcome = \'" + MissionOutcome + "\', "
             
             print("Enter the Mission Location Dimension-ID: ")
             DimensionID = input()
@@ -205,7 +203,7 @@ def HandleInsert():
             print("Enter the Organization Name: ")
             OrganizationName = input()
             if "NULL" not in OrganizationName:
-                query += "Name = " + OrganizationName + ", "
+                query += "Name = \'" + OrganizationName + "\', "
             
             print("Enter the Organization Dimension-ID: ")
             DimensionID = input()
@@ -220,12 +218,12 @@ def HandleInsert():
             print("Enter the Organization Objectives: ")
             Objectives = input()
             if "NULL" not in Objectives:
-                query += "Objectives = " + Objectives + ", "
+                query += "Objectives = \'" + Objectives + "\', "
             
             print("Enter the Organization HQ-Location: ")
             Location = input()
             if "NULL" not in Location:
-                query += "HeadquartersLocation = " + Location + ", "
+                query += "HeadquartersLocation = \'" + Location + "\', "
             
             print("Enter the Organization Logo (ID): ")
             Logo = input()
@@ -241,7 +239,7 @@ def HandleInsert():
             print("Enter the SideCharacter Name: ")
             SideCharacterName = input()
             if "NULL" not in SideCharacterName:
-                query += "Name = " + SideCharacterName + ", "
+                query += "Name = \'" + SideCharacterName + "\', "
             
             print("Enter the SideCharacter Dimension-ID: ")
             DimensionID = input()
@@ -251,12 +249,12 @@ def HandleInsert():
             print("Enter the SideCharacter Alias: ")
             Alias = input()
             if "NULL" not in Alias:
-                query += "MaskName = " + Alias + ", "
+                query += "MaskName = \'" + Alias + "\', "
             
             print("Enter the SideCharacter Gender: ")
             Gender = input()
             if "NULL" not in Gender:
-                query += "Gender = " + Gender            
+                query += "Gender = \'" + Gender + "\'"            
 
         case "ResearchNotes":
             print("Enter the ResearchNotes Date (DD|MM|YYYY): ")
@@ -267,28 +265,28 @@ def HandleInsert():
             print("Enter the ResearchNotes Title: ")
             Title = input()
             if "NULL" not in Title:
-                query += "Topic = " + Title + ", "
+                query += "Topic = \'" + Title + "\', "
             
             print("Enter the ResearchNotes Content: ")
             Content = input()
             if "NULL" not in Content:
-                query += "Content = " + Content 
+                query += "Content = \'" + Content + "\'"
                         
         case "Equipment":
             print("Enter the Equipment Name: ")
             EquipmentName = input()
             if "NULL" not in EquipmentName:
-                query += "Name = " + EquipmentName + ", "
+                query += "Name = \'" + EquipmentName + "\', "
             
             print("Enter the Equipment Type: ")
             EquipmentType = input()
             if "NULL" not in EquipmentType:
-                query += "Type = " + EquipmentType + ", "
+                query += "Type = \'" + EquipmentType + "\', "
             
             print("Enter the Equipment Description: ")
             EquipmentDescription = input()
             if "NULL" not in EquipmentDescription:
-                query += "Description = " + EquipmentDescription
+                query += "Description = \'" + EquipmentDescription + "\'"
             
         case "AbilitiesSpiderPerson":
             print("Enter the Corresponding SpiderPerson ID: ")
@@ -299,18 +297,18 @@ def HandleInsert():
             print("Enter the Ability Name: ")
             AbilityName = input()
             if "NULL" not in AbilityName:
-                query += "Ability = " + AbilityName 
+                query += "Ability = \'" + AbilityName + "\'" 
         
-        case "AbilitiesVillian":    
-            print("Enter the Corresponding Villian ID: ")
-            VillianID = input()
-            if "NULL" not in VillianID:
-                query += "VillianIdentifier = " + VillianID + ", "
+        case "AbilitiesVillain":    
+            print("Enter the Corresponding Villain ID: ")
+            VillainID = input()
+            if "NULL" not in VillainID:
+                query += "VillainIdentifier = " + VillainID + ", "
             
             print("Enter the Ability Name: ")
             AbilityName = input()
             if "NULL" not in AbilityName:
-                query += "Ability = " + AbilityName
+                query += "Ability = \'" + AbilityName + "\'"
         
         case "AbilitiesSideChar":
             print("Enter the Corresponding SideCharacter ID: ")
@@ -321,7 +319,7 @@ def HandleInsert():
             print("Enter the Ability Name: ")
             AbilityName = input()
             if "NULL" not in AbilityName:
-                query += "Ability = " + AbilityName
+                query += "Ability = \'" + AbilityName + "\'"
         
         # Relationship Tables
         case "Mentors":
@@ -336,10 +334,10 @@ def HandleInsert():
                 query += "MentorSpiderIdentifier = " + MentorID
             
         case "FacesOffAgainst":
-            print("Enter the Villian ID: ")
-            VillianID = input()
-            if "NULL" not in VillianID:
-                query += "VillianIdentifier = " + VillianID + ", "
+            print("Enter the Villain ID: ")
+            VillainID = input()
+            if "NULL" not in VillainID:
+                query += "VillainIdentifier = " + VillainID + ", "
             
             print("Enter the SpiderPerson ID: ")
             SpiderPersonID = input()
@@ -355,13 +353,13 @@ def HandleInsert():
             print("Enter the Equipment Name: ")
             EquipmentName = input()
             if "NULL" not in EquipmentName:
-                query += "EquipmentName = " + EquipmentName
+                query += "EquipmentName = \'" + EquipmentName + "\'"
             
         case "HeadsMission":
             print("Enter the Mission Title: ")
             MissionTitle = input()
             if "NULL" not in MissionTitle:
-                query += "MissionTitle = " + MissionTitle + ", "
+                query += "MissionTitle = \'" + MissionTitle + "\', "
             
             print("Enter the SpiderPerson ID: ")
             SpiderPersonID = input()
@@ -394,7 +392,7 @@ def HandleInsert():
             print("Enter the ResearchNotes Title: ")
             ResearchNotesTitle = input()
             if "NULL" not in ResearchNotesTitle:
-                query += "ResearchNotesTopic = " + ResearchNotesTitle + ", "
+                query += "ResearchNotesTopic = \'" + ResearchNotesTitle + "\', "
             
             print("Enter the SpiderPerson ID: ")
             SpiderPersonID = input()
@@ -405,7 +403,7 @@ def HandleInsert():
             print("Enter the Mission Title: ")
             MissionTitle = input()
             if "NULL" not in MissionTitle:
-                query += "MissionTitle = " + MissionTitle + ", "
+                query += "MissionTitle = \'" + MissionTitle + "\', "
             
             print("Enter the SpiderPerson ID: ")
             SpiderPersonID = input()
@@ -431,14 +429,14 @@ def HandleDelete():
     print("Available tables: ")
     print("----Entity Tables----")
     print("1. SpiderPerson")
-    print("2. Villian")
+    print("2. Villain")
     print("3. Mission")
     print("4. Organization")
     print("5. SideCharacter")
     print("6. ResearchNotes")
     print("7. Equipment")
     print("8. AbilitiesSpiderPerson")
-    print("9. AbilitiesVillian")
+    print("9. AbilitiesVillain")
     print("10. AbilitiesSideChar")
 
     print("\nEnter the Corresponding Primary Key for the table for deletion in each table\n")
@@ -471,11 +469,11 @@ def HandleDelete():
 
             query += "SpiderIdentifier = " + SpiderPersonID
         
-        case "Villian":
-            print("Enter the VillianID: ")
-            VillianID = input()
+        case "Villain":
+            print("Enter the VillainID: ")
+            VillainID = input()
 
-            query += "VillianIdentifier = " + VillianID
+            query += "VillainIdentifier = " + VillainID
         
         case "Mission":
             print("Enter the Mission Title: ")
@@ -513,11 +511,11 @@ def HandleDelete():
 
             query += "SpiderPersonIdentifier = " + SpiderPersonID
         
-        case "AbilitiesVillian":
-            print("Enter the Corresponding Villian ID: ")
-            VillianID = input()
+        case "AbilitiesVillain":
+            print("Enter the Corresponding Villain ID: ")
+            VillainID = input()
 
-            query += "VillianIdentifier = " + VillianID
+            query += "VillainIdentifier = " + VillainID
         
         case "AbilitiesSideChar":
             print("Enter the Corresponding SideCharacter ID: ")
@@ -538,9 +536,9 @@ def HandleDelete():
 def HandleProjection():
     global c
     print("Choose Among following Projection Options: ")
-    print("1. SpiderPerson and Associated Villians and SideCharacters ")
+    print("1. SpiderPerson and Associated Villains and SideCharacters ")
     print("2. SpiderPerson and Abilities ")
-    print("3. Villian and Abilities ")
+    print("3. Villain and Abilities ")
     print("4. SideCharacter and Abilities ")
     print("5. SpiderPerson and Associated Equipment ")
     print("6. SpiderPerson and Associated Missions ")
@@ -556,10 +554,10 @@ def HandleProjection():
     
     match choice:
         case 1:
-            print("----------SpiderPerson and Associated Villians and SideCharacters----------")
-            query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, Villian.VillianIdentifier, Villian.RealName, SideCharacter.CharacterIdentifier, SideCharacter.Name 
+            print("----------SpiderPerson and Associated Villains and SideCharacters----------")
+            query = '''SELECT SpiderPerson.SpiderIdentifier, SpiderPerson.RealName, SpiderPerson.HeroName, Villain.VillainIdentifier, Villain.RealName, SideCharacter.CharacterIdentifier, SideCharacter.Name 
                        FROM SpiderPerson LEFT JOIN FacesOffAgainst ON SpiderPerson.SpiderIdentifier = FacesOffAgainst.SpiderPersonIdentifier 
-                       LEFT JOIN Villian ON FacesOffAgainst.VillianIdentifier = Villian.VillianIdentifier 
+                       LEFT JOIN Villain ON FacesOffAgainst.VillainIdentifier = Villain.VillainIdentifier 
                        LEFT JOIN AssociatesWith ON SpiderPerson.SpiderIdentifier = AssociatesWith.SpiderPersonIdentifier 
                        LEFT JOIN SideCharacter ON AssociatesWith.SideCharacterIdentifier = SideCharacter.CharacterIdentifier;'''
             
@@ -593,9 +591,9 @@ def HandleProjection():
             return 0
         
         case 3:
-            print("----------Villian and Abilities----------")
-            query = '''SELECT Villian.VillianIdentifier, Villian.RealName, Villian.VillianName, AbilitiesVillian.Ability
-                        FROM Villian LEFT JOIN AbilitiesVillian ON Villian.VillianIdentifier = AbilitiesVillian.VillianIdentifier;'''
+            print("----------Villain and Abilities----------")
+            query = '''SELECT Villain.VillainIdentifier, Villain.RealName, Villain.VillainName, AbilitiesVillain.Ability
+                        FROM Villain LEFT JOIN AbilitiesVillain ON Villain.VillainIdentifier = AbilitiesVillain.VillainIdentifier;'''
             
             try:
                 c.execute(query)
@@ -670,9 +668,9 @@ def HandleAggregate():
     global c
 
     print("Choose Among following Aggregate Options: ")
-    print("1. Average Threat Level of Villians ")
+    print("1. Average Threat Level of Villains ")
     print("2. Total Number of Missions (Grouped by Outcome) ")
-    print("3. Number of SpiderPersons and Villians in each Dimension ")
+    print("3. Number of SpiderPersons and Villains in each Dimension ")
     print("4. Total Equipment used by each SpiderPersons ")
 
     print("\nEnter your choice: ")
@@ -686,8 +684,8 @@ def HandleAggregate():
     
     match choice:
         case 1:
-            print("----------Average Threat Level of Villians----------")
-            query = '''SELECT AVG(ThreatLevel) FROM Villian;'''
+            print("----------Average Threat Level of Villains----------")
+            query = '''SELECT AVG(ThreatLevel) FROM Villain;'''
             
             try:
                 c.execute(query)
@@ -718,7 +716,7 @@ def HandleAggregate():
             return 0
         
         case 3:
-            print("----------Number of SpiderPersons and Villians in each Dimension----------")
+            print("----------Number of SpiderPersons and Villains in each Dimension----------")
             query = '''SELECT SpiderPerson.DimensionID, COUNT(*) FROM SpiderPerson GROUP BY DimensionID;'''
 
             try:
@@ -732,7 +730,7 @@ def HandleAggregate():
             for row in c.fetchall():
                 print(row)
             
-            query = '''SELECT Villian.DimensionID, COUNT(*) FROM Villian GROUP BY DimensionID;'''
+            query = '''SELECT Villain.DimensionID, COUNT(*) FROM Villain GROUP BY DimensionID;'''
 
             try:
                 c.execute(query)
@@ -740,7 +738,7 @@ def HandleAggregate():
                 print("An error occurred:", e.args[0])
                 return -1
             
-            print("----------Villians----------")
+            print("----------Villains----------")
             # print the result
             for row in c.fetchall():
                 print(row)
@@ -767,7 +765,7 @@ def HandleSearch():
     global c
     
     print("Choose Among following Search Options: ")
-    print("1. Search for Villians of SpiderPerson (by ID)")
+    print("1. Search for Villains of SpiderPerson (by ID)")
     print("2. Search for Mission assigned to SpiderPerson (by ID)")
     print("3. Search for Equipment used by SpiderPerson (by ID)")
     print("4. Search for ResearchNotes written by SpiderPerson (by ID)")
@@ -784,12 +782,12 @@ def HandleSearch():
     
     match choice:
         case 1:
-            print("----------Search for Villians of SpiderPerson (by ID)----------")
+            print("----------Search for Villains of SpiderPerson (by ID)----------")
             print("Enter the SpiderPerson ID: ")
             SpiderPersonID = input()
-            query = '''SELECT Villian.VillianIdentifier, Villian.RealName, Villian.VillianName, Villian.ThreatLevel
+            query = '''SELECT Villain.VillainIdentifier, Villain.RealName, Villain.VillainName, Villain.ThreatLevel
                         FROM SpiderPerson LEFT JOIN FacesOffAgainst ON SpiderPerson.SpiderIdentifier = FacesOffAgainst.SpiderPersonIdentifier
-                        LEFT JOIN Villian ON FacesOffAgainst.VillianIdentifier = Villian.VillianIdentifier
+                        LEFT JOIN Villain ON FacesOffAgainst.VillainIdentifier = Villain.VillainIdentifier
                         WHERE SpiderPerson.SpiderIdentifier = ''' + SpiderPersonID + ";"
             
             try:
@@ -798,7 +796,7 @@ def HandleSearch():
                 print("An error occurred:", e.args[0])
                 return -1
             
-            print("----------Villians----------")
+            print("----------Villains----------")
             # print the result
             for row in c.fetchall():
                 print(row)
@@ -902,7 +900,7 @@ def HandleAnalytical():
     
     print("Choose Among following Analytical Options: ")
     print("1. SpiderPerson Efficiency report ")
-    print("2. Villian Opposition Network report ")
+    print("2. Villain Opposition Network report ")
     print("3. Equipment Usage report ")
 
     print("\nEnter your choice: ")
@@ -935,10 +933,10 @@ def HandleAnalytical():
             return 0
         
         case 2:
-            print("----------Villian Opposition Network report----------")
-            query = '''SELECT Villian.VillianIdentifier, Villian.RealName, Villian.VillianName, COUNT(*) AS SpiderPersonsFacedOff
-                        FROM Villian LEFT JOIN FacesOffAgainst ON Villian.VillianIdentifier = FacesOffAgainst.VillianIdentifier
-                        GROUP BY Villian.VillianIdentifier;'''
+            print("----------Villain Opposition Network report----------")
+            query = '''SELECT Villain.VillainIdentifier, Villain.RealName, Villain.VillainName, COUNT(*) AS SpiderPersonsFacedOff
+                        FROM Villain LEFT JOIN FacesOffAgainst ON Villain.VillainIdentifier = FacesOffAgainst.VillainIdentifier
+                        GROUP BY Villain.VillainIdentifier;'''
             
             try:
                 c.execute(query)

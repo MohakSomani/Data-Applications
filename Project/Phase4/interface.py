@@ -19,6 +19,35 @@ c = None # cursor
 conn = None # connection
 tmp = None # shell pprocess variable
 
+def PrintTableContents(table):
+    global c
+    global conn
+
+    try:
+        # first print the headers
+        c.execute("SHOW COLUMNS FROM " + table + ";")
+        print("----------" + table + "----------")
+        i = 0
+        for row in c.fetchall():
+            print(row['Field'], end="\t")
+            i += 1
+        
+        print("\n")
+        
+        # now print the contents
+        c.execute("SELECT * FROM " + table + ";")
+        for row in c.fetchall():
+            for i in range(len(row)):
+                print(row[i], end="\t")
+            print("\n")
+    
+    except pymysql.Error as e:
+        print("An error occurred:", e.args[0])
+        return -1
+        
+
+    return 0
+
 def PrintTables():
     global c
     try:
@@ -31,15 +60,15 @@ def PrintTables():
     i = 1
     for row in c.fetchall():
         print(i,end=". ")
-        print(row[0], end=": \n")
+        print(row['Tables_in_spiderverse'], end=": \n")
         i+=1
-        PrintColumns(row[0])
+        PrintColumns(row['Tables_in_spiderverse'])
         print()
 
     return 0
 
 def PrintColumns(table):
-    query = "PRAGMA table_info(" + table + ")"
+    query = "DESC " + table 
     try:
         c.execute(query)
     except pymysql.Error as e:
@@ -51,7 +80,7 @@ def PrintColumns(table):
     for row in c.fetchall():
         print("  ",end="")
         print(i,end=". ")
-        print(row[1])
+        print(row['Field'])
         i+=1
 
     return 0
@@ -786,8 +815,8 @@ def HandleSearch():
             print("Enter the SpiderPerson ID: ")
             SpiderPersonID = input()
             query = '''SELECT Villain.VillainIdentifier, Villain.RealName, Villain.VillainName, Villain.ThreatLevel
-                        FROM SpiderPerson LEFT JOIN FacesOffAgainst ON SpiderPerson.SpiderIdentifier = FacesOffAgainst.SpiderPersonIdentifier
-                        LEFT JOIN Villain ON FacesOffAgainst.VillainIdentifier = Villain.VillainIdentifier
+                        FROM SpiderPerson LEFT JOIN FacesOffAgainst ON SpiderPerson.SpiderIdentifier = FacesOffAgainst.SpiderPersonSpiderIdentifier
+                        LEFT JOIN Villain ON FacesOffAgainst.VillainVillainIdentifier = Villain.VillainIdentifier
                         WHERE SpiderPerson.SpiderIdentifier = ''' + SpiderPersonID + ";"
             
             try:
@@ -971,8 +1000,15 @@ def HandleAnalytical():
         case _:
             print("Invalid choice")
             return -1
+           
+def HandleSelect():
+    global c
+    global conn
+    global tmp
+    
+    table = input("Enter the table name to select data from: ")
+    PrintTableContents(table)           
         
-
 def HandleChoice(choice):
     global c
     global conn
@@ -991,29 +1027,32 @@ def HandleChoice(choice):
 
             HandleSimpleSQL(query)
         case 2:
+            print("----------Fetching Content of a table----------")
+            HandleSelect()
+        case 3:
             print("----------Insert Operation----------")
             HandleInsert()
             # conn.commit()
-        case 3:
+        case 4:
             print("----------Delete Operation----------")
             HandleDelete()
             # conn.commit()
-        case 4:
+        case 5:
             print("----------Projection Operation----------")
             HandleProjection()
-        case 5:
+        case 6:
             print("----------Aggregate Operation----------")
             HandleAggregate()
-        case 6:
+        case 7:
             print("----------Search Operation----------")
             HandleSearch()
-        case 7:
+        case 8:
             print("----------Analytical Operation----------")
             HandleAnalytical()
         case _:
             print("Invalid choice")
             return 0    
-                
+               
 def main():
     global c
     global conn
@@ -1029,8 +1068,8 @@ def main():
         conn = pymysql.connect(
                             #   host='localhost',
                             #   port=30306,
-                              user="root",
-                              password="password",
+                              user="chiragdhamija",
+                              password="jaiguruji",
                               db='spiderverse',
                               cursorclass=pymysql.cursors.DictCursor
                               )
@@ -1069,12 +1108,13 @@ def main():
         #take input from user
         print("\n----------Available Operations----------")
         print(" 1. Standard SQL query (Select, Insert, Update, Delete)")
-        print(" 2. Insertion Operation")
-        print(" 3. Delete Operation")
-        print(" 4. Projection Operation")
-        print(" 5. Aggregate Operation")
-        print(" 6. Search Operation")
-        print(" 7. Analytical Operation")
+        print(" 2. Fetching Content oof a table")
+        print(" 3. Insertion Operation")
+        print(" 4. Delete Operation")
+        print(" 5. Projection Operation")
+        print(" 6. Aggregate Operation")
+        print(" 7. Search Operation")
+        print(" 8. Analytical Operation")
         print("-------------------------------------------")
 
         while True:

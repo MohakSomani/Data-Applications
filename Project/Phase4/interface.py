@@ -210,7 +210,7 @@ def HandleInsert():
             if "NULL" not in MissionObjective:
                 query += "Objectives = \'" + MissionObjective + "\', "
             
-            print("Enter the Mission Resources Cost: ")
+            print("Enter the Mission Resources Expended: ")
             MissionResourcesCost = input()
             if "NULL" not in MissionResourcesCost:
                 query += "ResourcesUsed = \'" + MissionResourcesCost + "\', "
@@ -241,10 +241,10 @@ def HandleInsert():
             if "NULL" not in DimensionID:
                 query += "DimensionID = " + DimensionID + ", "
             
-            print("Enter the Organization Time of Establishment (DD|MM|YYYY): ")
+            print("Enter the Organization Time of Establishment (YYYY-MM-DD): ")
             TimeOfEstablishment = input()
             if "NULL" not in TimeOfEstablishment:
-                query += "TimeOfEstablishment = " + TimeOfEstablishment + ", "
+                query += "TimeOfEstablishment = \'" + TimeOfEstablishment + "\', "
             
             print("Enter the Organization Objectives: ")
             Objectives = input()
@@ -1082,6 +1082,8 @@ def main():
             c = conn.cursor()
         else:
             print("Failed to connect")
+            print("Exiting...")
+            exit(1)
 
         tmp = input("PRESS ENTER TO CONTINUE>")
     
@@ -1095,10 +1097,11 @@ def main():
     #Load Images from the Images folder into Images table in the database
     i = 0
     for filename in os.listdir("Images"):
-        with open("Images/" + filename, 'rb') as file:
-            Ablob = file.read()
-            c.execute("INSERT INTO Images VALUES (?, ?)", (i, Ablob))
-            i += 1 
+        if filename.endswith(".jpg") or filename.endswith(".png"):
+            with open("Images/" + filename, 'rb') as file:
+                Ablob = file.read()
+                c.execute("INSERT INTO Images VALUES (?, ?)", (i, Ablob))
+                i += 1 
 
     #Print the tables in the database
     print("----------Welcome to the Spiderverse Database----------")

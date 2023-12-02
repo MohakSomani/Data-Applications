@@ -1026,12 +1026,14 @@ def main():
     try:
         # Set db name accordingly which have been create by you
         # Set host to the server's address if you don't want to use local SQL server 
-        conn = pymysql.connect(host='localhost',
-                              port=30306,
+        conn = pymysql.connect(
+                            #   host='localhost',
+                            #   port=30306,
                               user="root",
                               password="password",
                               db='spiderverse',
-                              cursorclass=pymysql.cursors.DictCursor)
+                              cursorclass=pymysql.cursors.DictCursor
+                              )
         tmp = sp.call('clear', shell=True)
 
         if(conn.open):

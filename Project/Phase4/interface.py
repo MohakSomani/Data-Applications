@@ -553,18 +553,15 @@ def HandleChoice(choice):
             print("----------Delete Operation----------")
             HandleDelete()
         case 4:
-            print("----------Select Operation----------")
-            HandleSelect()
-        case 5:
             print("----------Projection Operation----------")
             HandleProjection()
-        case 6:
+        case 5:
             print("----------Aggregate Operation----------")
             HandleAggregate()
-        case 7:
+        case 6:
             print("----------Search Operation----------")
             HandleSearch()
-        case 8:
+        case 7:
             print("----------Analytical Operation----------")
             HandleAnalytical()
         case _:
@@ -595,11 +592,10 @@ def main():
         print(" 1. Standard SQL query (Select, Insert, Update, Delete)")
         print(" 2. Insertion Operation")
         print(" 3. Delete Operation")
-        print(" 4. Select Operation")
-        print(" 5. Projection Operation")
-        print(" 6. Aggregate Operation")
-        print(" 7. Search Operation")
-        print(" 8. Analytical Operation")
+        print(" 4. Projection Operation")
+        print(" 5. Aggregate Operation")
+        print(" 6. Search Operation")
+        print(" 7. Analytical Operation")
         print("-------------------------------------------")
 
         while True:

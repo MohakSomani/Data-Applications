@@ -10,12 +10,14 @@
 # Example: Mission Completion report
 
 
-import sqlite3
+import pymysql
+import pymysql.cursors
+import subprocess as sp
 import os
-import sys
 
 c = None # cursor
 conn = None # connection
+tmp = None # shell pprocess variable
 
 def PrintTables():
     global c
@@ -1016,25 +1018,46 @@ def HandleChoice(choice):
                 
 def main():
     global c
-    # connect to the database and Initialize the cursor
-    conn = sqlite3.connect("spiderverse.db")
-    c = conn.cursor()
+    global conn
+    global tmp    
+    
+    tmp = sp.call('clear', shell=True)
+    
+    print("Trying to connect to the database...", end="")
 
-    # check for successful connection
-    if conn is None:
-        print("Error connecting to the database")
-        return -1
-    elif c is None:
-        print("Error initializing the cursor")
-        return -1
+    try:
+        # Set db name accordingly which have been create by you
+        # Set host to the server's address if you don't want to use local SQL server 
+        conn = pymysql.connect(host='localhost',
+                              port=30306,
+                              user="root",
+                              password="password",
+                              db='spiderverse',
+                              cursorclass=pymysql.cursors.DictCursor)
+        tmp = sp.call('clear', shell=True)
+
+        if(conn.open):
+            print("Connected")
+            c = conn.cursor()
+        else:
+            print("Failed to connect")
+
+        tmp = input("Enter any key to CONTINUE>")
+    
+    except Exception as e:
+        print("Exception occured:{}".format(e))
+        
+        print("Exiting...")
+        exit(1)
+        
 
     #Load Images from the Images folder into Images table in the database
-    # i = 0
-    # for filename in os.listdir("Images"):
-    #     with open("Images/" + filename, 'rb') as file:
-    #         Ablob = file.read()
-    #         c.execute("INSERT INTO Images VALUES (?, ?)", (i, Ablob))
-    #         i += 1 
+    i = 0
+    for filename in os.listdir("Images"):
+        with open("Images/" + filename, 'rb') as file:
+            Ablob = file.read()
+            c.execute("INSERT INTO Images VALUES (?, ?)", (i, Ablob))
+            i += 1 
 
     #Print the tables in the database
     print("----------Welcome to the Spiderverse Database----------")

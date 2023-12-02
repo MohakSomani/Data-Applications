@@ -475,7 +475,7 @@ def HandleInsert():
             return -1
     
     query += ";"
-    print(query) # debug statement
+    # print(query) # debug statement
     # execute the query
     try:
         c.execute(query)
@@ -517,6 +517,7 @@ def HandleUpdate():
                 SpiderPersonID = input()
                 try:
                     SpiderPersonID = int(SpiderPersonID)
+                    SpiderPersonID = str(SpiderPersonID)
                     break
                 except:
                     print("Please enter a valid integer.")
@@ -556,6 +557,7 @@ def HandleUpdate():
                 VillainID = input()
                 try:
                     VillainID = int(VillainID)
+                    VillainID = str(VillainID)
                     break
                 except:
                     print("Please enter a valid integer.")
@@ -595,6 +597,7 @@ def HandleUpdate():
             while 1:
                 try:
                     MissionTitle = int(MissionTitle)
+                    MissionTitle = str(MissionTitle)
                     break
                 except:
                     print("Please enter a valid integer.")
@@ -629,6 +632,7 @@ def HandleUpdate():
                 OrganizationID = input()
                 try:
                     OrganizationID = int(OrganizationID)
+                    OrganizationID = str(OrganizationID)
                     break
                 except:
                     print("Please enter a valid integer.")
@@ -673,6 +677,7 @@ def HandleUpdate():
                 SideCharacterID = input()
                 try:
                     SideCharacterID = int(SideCharacterID)
+                    SideCharacterID = str(SideCharacterID)
                     break
                 except:
                     print("Please enter a valid integer.")
@@ -787,7 +792,7 @@ def HandleUpdate():
             return -1
     
     query += ";"
-    print(query) # debug statement
+    # print(query) # debug statement
     # execute the query
     try:
         c.execute(query)
@@ -1458,6 +1463,7 @@ def main():
                               user="chiragdhamija",
                               password="jaiguruji",
                               db='spiderverse',
+                              autocommit=True,
                               cursorclass=pymysql.cursors.DictCursor
                               )
         tmp = sp.call('clear', shell=True)

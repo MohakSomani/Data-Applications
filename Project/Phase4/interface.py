@@ -1579,6 +1579,7 @@ def main():
 
         HandleChoice(choice)
         Continue = input("Do you want to continue? (Y/N): ")
+        tmp = sp.call('clear', shell=True)
         if Continue == "Y" or Continue == "y":
             continue
 

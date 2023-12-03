@@ -181,7 +181,7 @@ def HandleInsert():
     match table:
         # Entity Tables
         case "SpiderPerson":
-            print("Enter the SpiderPersonID: ")
+            print("Enter the SpiderPersonID:")
             SpiderPersonID = input()
             if "NULL" not in SpiderPersonID:   
                 query += "SpiderIdentifier = " + SpiderPersonID + ", "
@@ -1076,7 +1076,7 @@ def HandleAggregate():
     match choice:
         case 1:
             print("----------Average Threat Level of Villains----------")
-            query = '''SELECT AVG(ThreatLevel) FROM Villain;'''
+            query = '''SELECT AVG(ThreatLevel) AS T_L FROM Villain;'''
             
             try:
                 c.execute(query)
@@ -1086,13 +1086,13 @@ def HandleAggregate():
             
             # print the result
             for row in c.fetchall():
-                print(row)
+                print(row["T_L"])
             
             return 0
 
         case 2:
             print("----------Total Number of Missions (Grouped by Outcome)----------")
-            query = '''SELECT Outcome, COUNT(*) FROM Mission GROUP BY Outcome;'''
+            query = '''SELECT Outcome, COUNT(*) AS C FROM Mission GROUP BY Outcome;'''
             
             try:
                 c.execute(query)
@@ -1101,14 +1101,16 @@ def HandleAggregate():
                 return -1
             
             # print the result
+            print("Outcome\tCount")
+            
             for row in c.fetchall():
-                print(row)
+                print(row["Outcome"], "\t", row["C"])
             
             return 0
         
         case 3:
             print("----------Number of SpiderPersons and Villains in each Dimension----------")
-            query = '''SELECT SpiderPerson.DimensionID, COUNT(*) FROM SpiderPerson GROUP BY DimensionID;'''
+            query = '''SELECT SpiderPerson.DimensionID, COUNT(*) AS C FROM SpiderPerson GROUP BY DimensionID;'''
 
             try:
                 c.execute(query)
@@ -1118,8 +1120,9 @@ def HandleAggregate():
             
             # print the result
             print("----------SpiderPersons----------")
+            print("DimensionID\tCount")
             for row in c.fetchall():
-                print(row)
+                print(row["DimensionID"], "\t", row["C"])
             
             query = '''SELECT Villain.DimensionID, COUNT(*) FROM Villain GROUP BY DimensionID;'''
 
@@ -1151,6 +1154,11 @@ def HandleAggregate():
                 print(row)
             
             return 0
+        
+        case _:
+            print("Invalid choice")
+            return -1
+        
         
 def HandleSearch():
     global c
@@ -1188,10 +1196,11 @@ def HandleSearch():
                 print("An error occurred:", e.args[0])
                 return -1
             
-            print("----------Villains----------")
-            # print the result
+            print("----------Villains----------\n")
+            # print the result in a formatted way
+            print("ID\tReal Name\tVillain Name\tThreat Level")
             for row in c.fetchall():
-                print(row)
+                print(row["VillainIdentifier"], "\t", row["RealName"], "\t", row["VillainName"], "\t", row["ThreatLevel"])
             
             return 0
         
@@ -1211,9 +1220,10 @@ def HandleSearch():
                 return -1
             
             print("----------Missions----------")
+            print("Title\tObjectives\tResources Used\tOutcome")
             # print the result
             for row in c.fetchall():
-                print(row)
+                print(row["Title"], "\t", row["Objectives"], "\t", row["ResourcesUsed"], "\t", row["Outcome"])
 
             return 0
         
@@ -1233,9 +1243,10 @@ def HandleSearch():
                 return -1
             
             print("----------Equipment----------")
+            print("Name\tType\tDescription")
             # print the result
             for row in c.fetchall():
-                print(row)
+                print(row["Name"], "\t", row["Type"], "\t", row["Description"])
 
             return 0
         
@@ -1255,9 +1266,10 @@ def HandleSearch():
                 return -1
             
             print("----------ResearchNotes----------")
+            print("Date\tTopic\tContent")
             # print the result
             for row in c.fetchall():
-                print(row)
+                print(row["Date"], "\t", row["Topic"], "\t", row["Content"])
 
             return 0
         
@@ -1277,9 +1289,10 @@ def HandleSearch():
                 return -1
             
             print("----------Members----------")
+            print("ID\tReal Name\tHero Name")
             # print the result
             for row in c.fetchall():
-                print(row)
+                print(row["SpiderIdentifier"], "\t", row["RealName"], "\t", row["HeroName"])
 
             return 0
         
@@ -1507,10 +1520,10 @@ def main():
         
 
     #Load Images from the Images folder into Images table in the database
-    i = 0
+    i = 1
     try:
-        c.execute("DROP TABLE IF EXISTS Images")
-        c.execute("CREATE TABLE Images (id INT, image LONGBLOB)")
+        c.execute("CREATE TABLE IF NOT EXISTS Images (id INT, image LONGBLOB)")
+        c.execute("DELETE FROM Images")
     except pymysql.Error as e:
         print("An error occurred:", e.args[0])
         return -1

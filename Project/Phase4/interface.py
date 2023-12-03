@@ -959,8 +959,9 @@ def HandleProjection():
                 return -1
 
             # print the result
+            print("SpiderPersonID\tRealName\tHeroName\tVillainID\tVillainName\tSideCharacterID\tSideCharacterName")
             for row in c.fetchall():
-                print(row)
+                print(row["SpiderIdentifier"], "\t", row["RealName"], "\t", row["HeroName"], "\t", row["VillainIdentifier"], "\t", row["RealName"], "\t", row["CharacterIdentifier"], "\t", row["Name"])
             
             return 0
 
@@ -976,8 +977,9 @@ def HandleProjection():
                 return -1
             
             # print the result
+            print("SpiderPersonID\tRealName\tHeroName\tAbility")
             for row in c.fetchall():
-                print(row)
+                print(row["SpiderIdentifier"], "\t", row["RealName"], "\t", row["HeroName"], "\t", row["Ability"])
             
             return 0
         
@@ -993,8 +995,9 @@ def HandleProjection():
                 return -1
             
             # print the result
+            print("VillainID\tRealName\tVillainName\tAbility")
             for row in c.fetchall():
-                print(row)
+                print(row["VillainIdentifier"], "\t", row["RealName"], "\t", row["VillainName"], "\t", row["Ability"])
 
             return 0
         
@@ -1010,8 +1013,9 @@ def HandleProjection():
                 return -1
             
             # print the result
+            print("SideCharacterID\tName\tAlias\tAbility")
             for row in c.fetchall():
-                print(row)
+                print(row["CharacterIdentifier"], "\t", row["Name"], "\t", row["MaskName"], "\t", row["Ability"])
 
             return 0
         
@@ -1028,8 +1032,9 @@ def HandleProjection():
                 return -1
             
             # print the result
+            print("SpiderPersonID\tRealName\tHeroName\tEquipment")
             for row in c.fetchall():
-                print(row)
+                print(row["SpiderIdentifier"], "\t", row["RealName"], "\t", row["HeroName"], "\t", row["Name"])
             
             return 0
         
@@ -1046,8 +1051,9 @@ def HandleProjection():
                 return -1
             
             # print the result
+            print("SpiderPersonID\tRealName\tHeroName\tMissionTitle")
             for row in c.fetchall():
-                print(row)
+                print(row["SpiderIdentifier"], "\t", row["RealName"], "\t", row["HeroName"], "\t", row["Title"])
 
             return 0
     
@@ -1124,7 +1130,7 @@ def HandleAggregate():
             for row in c.fetchall():
                 print(row["DimensionID"], "\t", row["C"])
             
-            query = '''SELECT Villain.DimensionID, COUNT(*) FROM Villain GROUP BY DimensionID;'''
+            query = '''SELECT Villain.DimensionID, COUNT(*) AS C FROM Villain GROUP BY DimensionID;'''
 
             try:
                 c.execute(query)
@@ -1133,9 +1139,10 @@ def HandleAggregate():
                 return -1
             
             print("----------Villains----------")
+            print("DimensionID\tCount")
             # print the result
             for row in c.fetchall():
-                print(row)
+                print(row["DimensionID"], "\t", row["C"])
             
             return 0
         
@@ -1150,8 +1157,9 @@ def HandleAggregate():
                 return -1
             
             # print the result
+            print("ID\tReal Name\tHero Name\tCount")
             for row in c.fetchall():
-                print(row)
+                print(row["SpiderIdentifier"], "\t", row["RealName"], "\t", row["HeroName"], "\t", row["COUNT(*)"])
             
             return 0
         
@@ -1333,8 +1341,9 @@ def HandleAnalytical():
                 return -1
         
             # print the result
+            print("ID\tReal Name\tHero Name\tMissions Assigned")
             for row in c.fetchall():
-                print(row)
+                print(row["SpiderIdentifier"], "\t", row["RealName"], "\t", row["HeroName"], "\t", row["MissionsAssigned"])
             
             return 0
         
@@ -1352,8 +1361,9 @@ def HandleAnalytical():
                 return -1
             
             # print the result
+            print("ID\tReal Name\tVillain Name\tSpiderPersons FacedOff\tAbility")
             for row in c.fetchall():
-                print(row)
+                print(row["VillainIdentifier"], "\t", row["RealName"], "\t", row["VillainName"], "\t", row["SpiderPersonsFacedOff"], "\t", row["Ability"])
 
             return 0
         
@@ -1370,8 +1380,9 @@ def HandleAnalytical():
                 return -1
             
             # print the result
+            print("Name\tType\tSpiderPersons Using")
             for row in c.fetchall():
-                print(row)
+                print(row["Name"], "\t", row["Type"], "\t", row["SpiderPersonsUsing"])
 
             return 0
         

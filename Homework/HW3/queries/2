@@ -1,0 +1,5 @@
+SELECT DISTINCT Directors.fname, Directors.lname  
+FROM Directors 
+JOIN Movie_Directors ON Movie_Directors.did = Directors.id 
+JOIN Movies ON Movies.id = Movie_Directors.mid 
+WHERE (Movies.year % 4 = 0 AND Movies.year % 100 != 0) OR (Movies.year % 400 = 0);

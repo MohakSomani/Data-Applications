@@ -1,0 +1,12 @@
+SELECT Movies.* 
+FROM Movies 
+JOIN CAST ON CAST.mid = Movies.id 
+GROUP BY Movies.id 
+HAVING COUNT(CAST.pid) = (     
+	SELECT MAX(actor_count)     
+        FROM (
+        	SELECT COUNT(pid) AS actor_count
+                FROM CAST         
+                GROUP BY mid
+              ) 
+        AS counts );

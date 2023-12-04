@@ -1,0 +1,5 @@
+SELECT Actors.fname, Actors.lname  
+FROM Actors 
+JOIN CAST ON CAST.pid = Actors.id 
+JOIN Movies ON Movies.id = CAST.mid 
+WHERE Movies.name = 'Officer 444 (1926)';

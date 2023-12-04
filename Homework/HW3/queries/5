@@ -1,0 +1,4 @@
+SELECT did, COUNT(did) as Num_Films 
+FROM Movie_Directors 
+GROUP BY did 
+ORDER BY Num_Films ASC, did ASC;

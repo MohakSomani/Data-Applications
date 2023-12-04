@@ -1,0 +1,4 @@
+SELECT Movies.name 
+FROM Movies 
+WHERE Movies.year = (SELECT year FROM Movies WHERE name = 'Shrek (2001)') 
+AND Movies.ranking > (SELECT ranking FROM Movies WHERE name = 'Shrek (2001)');

@@ -1,0 +1,11 @@
+SELECT M.id, M.name AS movie_name, COUNT(C.pid) AS num_actors
+FROM Movies M
+JOIN (
+    SELECT * 
+    FROM CAST C 
+    JOIN Actors A ON C.pid = A.id 
+    WHERE A.lname LIKE 'A%'
+) C ON M.id = C.mid
+GROUP BY M.id, M.name
+HAVING num_actors >= 1
+ORDER BY num_actors;

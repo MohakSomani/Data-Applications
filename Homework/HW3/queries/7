@@ -1,0 +1,5 @@
+SELECT A.id, A.fname, A.lname, A.gender AS film_count
+FROM Actors A
+JOIN CAST C ON A.id = C.pid
+GROUP BY A.id, A.fname, A.lname
+HAVING COUNT(C.pid) >= 30;
